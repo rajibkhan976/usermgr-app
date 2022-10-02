@@ -43,6 +43,7 @@
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
+  margin-bottom: 1rem;
 }
 
 .title,
@@ -106,6 +107,16 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
+}
+
+.searchbar_container {
+  width: 100%;
+}
+
+.searchbar_row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 600px) {
