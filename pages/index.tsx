@@ -7,10 +7,12 @@ import { bindActionCreators } from "redux";
 import * as userActions from "../store/actions/userActions";
 import { useState, useEffect } from "react";
 import TopBar from "../components/TopBar";
+import Popup from "../components/Popup";
 
 const Home: NextPage = ({ users, userActions }: any) => {
   const [userList, setUserList] = useState<any[]>([]);
   const [searchKey, setSearchKey] = useState<string>("");
+  const [showPopup, setShowPopup] = useState<boolean>(false);
 
   useEffect(() => {
     userActions.getUsers();
@@ -49,7 +51,11 @@ const Home: NextPage = ({ users, userActions }: any) => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>YellowPages</h1>
-        <TopBar searchKey={searchKey} handleOnChange={setSearchKey} />
+        <TopBar
+          searchKey={searchKey}
+          handleOnChange={setSearchKey}
+          handleShowModal={setShowPopup}
+        />
 
         <div className={styles.grid}>
           {Array.isArray(userList) &&
@@ -62,6 +68,7 @@ const Home: NextPage = ({ users, userActions }: any) => {
               </div>
             ))}
         </div>
+        <Popup show={showPopup} handleShowModal={setShowPopup} />
       </main>
 
       <footer className={styles.footer}>
