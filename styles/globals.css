@@ -139,10 +139,23 @@ a {
 /* X-Small devices (portrait phones, less than 576px)
  No media query for `xs` since this is the default in Bootstrap */
 
+/* Extra small devices */
+@media (max-width: 575px) {
+  .modal-content {
+    width: 80%;
+  }
+  .justify-content-sm-center {
+    justify-content: center !important;
+  }
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   .modal-content {
     width: 80%;
+  }
+  .justify-content-sm-center {
+    justify-content: center !important;
   }
 }
 
@@ -150,6 +163,9 @@ a {
 @media (min-width: 768px) {
   .modal-content {
     width: 80%;
+  }
+  .justify-content-md-end {
+    justify-content: flex-end !important;
   }
 }
 
