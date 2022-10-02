@@ -6,17 +6,38 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../store/actions/userActions";
 import { useState, useEffect } from "react";
-import SearchBox from "../components/SearchBox";
-import Button from "../components/Button";
+import TopBar from "../components/TopBar";
 
 const Home: NextPage = ({ users, userActions }: any) => {
+  const [userList, setUserList] = useState<any[]>([]);
   const [searchKey, setSearchKey] = useState<string>("");
 
   useEffect(() => {
     userActions.getUsers();
   }, []);
 
-  console.log(users);
+  useEffect(() => {
+    if (Array.isArray(users) && users.length > 0) {
+      setUserList(users);
+    }
+  }, [users]);
+
+  useEffect(() => {
+    if (searchKey) {
+      setUserList(
+        userList.filter(
+          (user) =>
+            user.name?.toLowerCase()?.includes(searchKey.toLowerCase()) ||
+            user.email?.toLowerCase()?.includes(searchKey.toLowerCase()) ||
+            user.phone?.toLowerCase()?.includes(searchKey.toLowerCase())
+        )
+      );
+    } else {
+      setUserList(users);
+    }
+  }, [searchKey]);
+
+  console.log(searchKey);
 
   return (
     <div className={styles.container}>
@@ -28,23 +49,17 @@ const Home: NextPage = ({ users, userActions }: any) => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>YellowPages</h1>
-
-        <div className={styles.searchbar_container}>
-          <div className={styles.searchbar_row}>
-            <SearchBox searchKey={searchKey} handleOnChange={setSearchKey} />
-            <Button>Add</Button>
-          </div>
-        </div>
+        <TopBar searchKey={searchKey} handleOnChange={setSearchKey} />
 
         <div className={styles.grid}>
-          {Array.isArray(users) &&
-            users.length > 0 &&
-            users.map((user) => (
-              <a href="https://nextjs.org/docs" className={styles.card}>
-                <h2>{user.name}</h2>
+          {Array.isArray(userList) &&
+            userList.length > 0 &&
+            userList.map((user) => (
+              <div className={styles.card} key={user.id}>
+                <h3>{user.name}</h3>
                 <p>{user.email}</p>
                 <p>{user.phone}</p>
-              </a>
+              </div>
             ))}
         </div>
       </main>

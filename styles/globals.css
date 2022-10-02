@@ -61,6 +61,16 @@ a {
   flex-direction: column;
 }
 
+.topbar-container {
+  width: 100%;
+}
+
+.topbar-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

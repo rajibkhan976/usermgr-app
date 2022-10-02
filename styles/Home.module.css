@@ -71,7 +71,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+  width: 100%;
 }
 
 .card {
@@ -84,6 +84,7 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
+  flex-grow: 1;
 }
 
 .card:hover,
@@ -100,23 +101,13 @@
 
 .card p {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
 
 .logo {
   height: 1em;
   margin-left: 0.5rem;
-}
-
-.searchbar_container {
-  width: 100%;
-}
-
-.searchbar_row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 @media (max-width: 600px) {
