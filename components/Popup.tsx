@@ -1,14 +1,16 @@
 import Button from "./Button";
 import { Formik } from "formik";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as userActions from "../store/actions/userActions";
 
 type PopupProps = {
   show: boolean;
   handleShowModal: (status: boolean) => void;
+  userActions: any;
 };
 
-const Popup = (props: PopupProps) => {
-  const { show, handleShowModal } = props;
-
+const Popup = ({ show, handleShowModal, userActions }: PopupProps) => {
   return (
     <>
       {show && (
@@ -17,31 +19,30 @@ const Popup = (props: PopupProps) => {
             <Formik
               initialValues={{ name: "", email: "", phone: "" }}
               validate={(values) => {
-                const errors = { name: "", email: "", phone: "" };
+                const errors = {};
                 if (!values.name) {
-                  errors.name = "Required";
-                } else if (!/^[A-Z]+$/i.test(values.name)) {
-                  errors.name = "Error: Invalid name";
+                  Object.assign(errors, { name: "Required" });
+                } else if (!/^\S[A-Z\s]+$/i.test(values.name)) {
+                  Object.assign(errors, { name: "Error: Invalid name" });
                 }
                 if (!values.email) {
-                  errors.email = "Required";
+                  Object.assign(errors, { email: "Required" });
                 } else if (
                   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
                 ) {
-                  errors.email = "Error: Invalid email";
+                  Object.assign(errors, { email: "Error: Invalid email" });
                 }
                 if (!values.phone) {
-                  errors.phone = "Required";
+                  Object.assign(errors, { phone: "Required" });
                 } else if (!/^[A-Z0-9+-]+$/i.test(values.phone)) {
-                  errors.phone = "Error: Invalid phone";
+                  Object.assign(errors, { phone: "Error: Invalid phone" });
                 }
                 return errors;
               }}
               onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
-                  setSubmitting(false);
-                }, 400);
+                userActions.addUser(values);
+                handleShowModal(false);
+                setSubmitting(false);
               }}
             >
               {({
@@ -118,4 +119,8 @@ const Popup = (props: PopupProps) => {
   );
 };
 
-export default Popup;
+const mapDispatchToProps = (dispatch: any) => ({
+  userActions: bindActionCreators(userActions, dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(Popup);

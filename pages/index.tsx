@@ -8,6 +8,7 @@ import * as userActions from "../store/actions/userActions";
 import { useState, useEffect } from "react";
 import TopBar from "../components/TopBar";
 import Popup from "../components/Popup";
+import { User } from "../interfaces/UserInterface";
 
 const Home: NextPage = ({ users, userActions }: any) => {
   const [userList, setUserList] = useState<any[]>([]);
@@ -39,8 +40,6 @@ const Home: NextPage = ({ users, userActions }: any) => {
     }
   }, [searchKey]);
 
-  console.log(searchKey);
-
   return (
     <div className={styles.container}>
       <Head>
@@ -60,8 +59,8 @@ const Home: NextPage = ({ users, userActions }: any) => {
         <div className={styles.grid}>
           {Array.isArray(userList) &&
             userList.length > 0 &&
-            userList.map((user) => (
-              <div className={styles.card} key={user.id}>
+            userList.map((user, index) => (
+              <div className={styles.card} key={index}>
                 <h3>{user.name}</h3>
                 <p>{user.email}</p>
                 <p>{user.phone}</p>
